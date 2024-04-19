@@ -25,8 +25,8 @@ if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"])
 		$svdvaParam = '%' . $svdva . '%';
 		$stmt->bind_param("s", $svdvaParam);
 		$stmt->execute();
-		print_r($stmt);die();
 		$result = $stmt->get_result();
+		print_r($result);die();
 		if ( $result->num_rows == 1 ){
 			$row = $result->fetch_assoc();
 			$userID = $row["id"];
