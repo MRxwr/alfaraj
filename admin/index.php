@@ -1,5 +1,6 @@
 <?php
 require ("includes/config.php");
+die();
 require ("includes/checksouthead.php");
 ?>
 <!DOCTYPE html>
