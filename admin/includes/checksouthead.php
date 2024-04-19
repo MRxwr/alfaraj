@@ -18,6 +18,7 @@ if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"])
 		$username = $row["fullName"];
 		$_SESSION['CreateKWUALFARAJ'] = $email;	
 	}else{
+		print_r($result->num_rows);die();
 		$sql = "SELECT * 
 				FROM `employees` 
 				WHERE `keepMeAlive` LIKE ?";
@@ -26,7 +27,6 @@ if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"])
 		$stmt->bind_param("s", $svdvaParam);
 		$stmt->execute();
 		$result = $stmt->get_result();
-		print_r($result->num_rows);die();
 		if ( $result->num_rows == 1 ){
 			$row = $result->fetch_assoc();
 			$userID = $row["id"];
