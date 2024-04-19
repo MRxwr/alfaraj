@@ -1,15 +1,7 @@
 <?php
-if ( isset ( $_COOKIE["CreateKWUALFARAJ"] ) ){
-	session_start ();
-	require ("config.php");
-	
+if ( isset ($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"]) ){
+	session_start ();	
 	$svdva = $_COOKIE["CreateKWUALFARAJ"];
-	/*
-	$sql = "SELECT * 
-			FROM `adminstration` 
-			WHERE `keepMeAlive` LIKE '%".$svdva."%'";
-	$result = $dbconnect->query($sql);
-	*/
 	$sql = "SELECT * 
 			FROM `adminstration` 
 			WHERE `keepMeAlive` LIKE ?";
@@ -34,12 +26,6 @@ if ( isset ( $_COOKIE["CreateKWUALFARAJ"] ) ){
 		$stmt->bind_param("s", $svdvaParam);
 		$stmt->execute();
 		$result = $stmt->get_result();
-		/*
-		$sql = "SELECT * 
-				FROM `employees` 
-				WHERE `keepMeAlive` LIKE '%".$svdva."%'";
-		$result = $dbconnect->query($sql);
-		*/
 		if ( $result->num_rows == 1 ){
 			$row = $result->fetch_assoc();
 			$userID = $row["id"];
@@ -47,11 +33,10 @@ if ( isset ( $_COOKIE["CreateKWUALFARAJ"] ) ){
 			$username = $row["fullName"];
 			$_SESSION['CreateKWUALFARAJ'] = $email;	
 		}else{
-			header("Location: logout.php");
+			header("Location: logout.php");die();
 		}
 	}
-}
-elseif ( !isset ( $_COOKIE["CreateKWUALFARAJ"] ) ){
-	header("Location: login.php");
+}else{
+	header("Location: login.php");die();
 }
 ?>
