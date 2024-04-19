@@ -23,9 +23,9 @@ if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"])
 				WHERE `keepMeAlive` LIKE ?";
 		$stmt = $dbconnect->prepare($sql);
 		$svdvaParam = '%' . $svdva . '%';
-		print_r($stmt);die();
 		$stmt->bind_param("s", $svdvaParam);
 		$stmt->execute();
+		print_r($stmt);die();
 		$result = $stmt->get_result();
 		if ( $result->num_rows == 1 ){
 			$row = $result->fetch_assoc();
