@@ -41,5 +41,7 @@ if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"])
 	}else{
 		header("Location: logout.php");die();
 	}
+}else{
+	header("Location: logout.php");die();
 }
 ?>
