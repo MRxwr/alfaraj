@@ -7,36 +7,13 @@ $password = $_POST["password"];
 $password = sha1($password);
 
 $userType = "0";
-/*
-$sql = "SELECT * 
-		FROM `adminstration` 
-		WHERE 
-		`email` LIKE '$email' 
-		AND 
-		`password` LIKE '$password'
-		";
-$result = $dbconnect->query($sql);
-*/
 $sql = "SELECT * FROM `adminstration` WHERE `email` = ? AND `password` = ?";
 $stmt = $dbconnect->prepare($sql);
 $stmt->bind_param("ss", $email, $password);
 $stmt->execute();
 $result = $stmt->get_result();
-if ( $result->num_rows < 1 )
-{
+if ( $result->num_rows < 1 ){
 	$userType = "1";
-	/*
-	$sql = "SELECT * 
-			FROM `employees` 
-			WHERE 
-			`email` LIKE '$email' 
-			AND 
-			`password` LIKE '$password'
-			AND 
-			`hidden` != 1
-			";
-	$result = $dbconnect->query($sql);
-	*/
 	$sql = "SELECT * 
         FROM `employees` 
         WHERE 
@@ -49,8 +26,7 @@ if ( $result->num_rows < 1 )
 	$stmt->bind_param("ss", $email, $password);
 	$stmt->execute();
 	$result = $stmt->get_result();
-	if ( $result->num_rows < 1 )
-	{
+	if ( $result->num_rows < 1 ){
 		$userType = "2";
 	}
 }
@@ -59,8 +35,7 @@ $row = $result->fetch_assoc();
 $coockiecode = $row["keepMeAlive"];
 $coockiecode = explode(',',$coockiecode);
 $GenerateNewCC = md5(rand());
-if ( sizeof($coockiecode) <= 3 )
-{
+if ( sizeof($coockiecode) <= 3 ){
 	$coockiecodenew = array();
 	if ( !isset ($coockiecode[2]) ) { $coockiecodenew[1] = $GenerateNewCC ; } else { $coockiecodenew[0] = $coockiecode[1]; }
 	if ( !isset ($coockiecode[1]) ) { $coockiecodenew[0] = $GenerateNewCC ; } else { $coockiecodenew[1] = $coockiecode[2]; }
@@ -69,12 +44,7 @@ if ( sizeof($coockiecode) <= 3 )
 
 $coockiecode = $coockiecodenew[0] . "," . $coockiecodenew[1] . "," . $coockiecodenew[2] ;
 
-if ( $userType == 0 )
-{
-	/*
-	$sql = "UPDATE adminstration SET keepMeAlive = '$coockiecode' WHERE email like '$email' AND password like '$password'";
-	$result = $dbconnect->query($sql);
-	*/
+if ( $userType == 0 ){
 	$sql = "UPDATE adminstration SET keepMeAlive = ? WHERE email = ? AND password = ?";
 	$stmt = $dbconnect->prepare($sql);
 	$stmt->bind_param("sss", $coockiecode, $email, $password);
@@ -83,13 +53,7 @@ if ( $userType == 0 )
 	header("Location: ../index.php");
 	setcookie("CreateKWUALFARAJ", $GenerateNewCC, time() + (86400*30 ), "/");
 	exit();
-}
-elseif ($userType == 1 )
-{
-	/*
-	$sql = "UPDATE employees SET keepMeAlive = '$coockiecode' WHERE email like '$email' AND password like '$password'";
-	$result = $dbconnect->query($sql);
-	*/
+}elseif ($userType == 1 ){
 	$sql = "UPDATE employees SET keepMeAlive = ? WHERE email like ? AND password like ?";
 	$stmt = $dbconnect->prepare($sql);
 	$stmt->bind_param("sss", $coockiecode, $email, $password);
@@ -98,9 +62,7 @@ elseif ($userType == 1 )
 	header("Location: ../index.php");
 	setcookie("CreateKWUALFARAJ", $GenerateNewCC, time() + (86400*30 ), "/");
 	exit();
-}
-else
-{
+}else{
 	echo "try again";
 	header("Location: ../login.php?error=p");
 	exit();
