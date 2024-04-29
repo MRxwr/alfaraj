@@ -28,12 +28,12 @@ function selectDB($table, $where){
 
 if ( isset($_COOKIE["CreateKWUALFARAJ"]) && !empty($_COOKIE["CreateKWUALFARAJ"]) ){
 	$svdva = $_COOKIE["CreateKWUALFARAJ"];
-	if ( $user = selectDB("adminstration","`keepMeAlive` LIKE '%{$svdva}%'") ) {
+	if ( $user = selectDB("adminstration","`keepMeAlive` LIKE '{$svdva}'") ) {
 		$userID = $user[0]["id"];
 		$email = $user[0]["email"];
 		$username = $user[0]["fullName"];
 		$_SESSION['CreateKWUALFARAJ'] = $email;	
-	}elseif( $user = selectDB("employees","`keepMeAlive` LIKE '%{$svdva}%'") ){
+	}elseif( $user = selectDB("employees","`keepMeAlive` LIKE '{$svdva}'") ){
 		$userID = $user[0]["id"];
 		$email = $user[0]["email"];
 		$username = $user[0]["fullName"];
