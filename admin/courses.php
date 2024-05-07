@@ -84,7 +84,6 @@ if ( isset($_GET["edit"]) )
 			";
     $result = $dbconnect->query($sql);
 }
-die();
 
 if ( isset($_GET["delId"]) ){
 	$sql = "UPDATE `courses` SET 
