@@ -27,7 +27,7 @@ $details = array(
 	"status" => 2,
 	"paymentMethod" => 1,
 );
-die();
+
 if( $payment = createAPI($details) ){
 	header("LOCATION: " . $payment);die();
 }else{
