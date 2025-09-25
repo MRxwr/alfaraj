@@ -396,6 +396,7 @@ for ($i = 0; $i < 3; $i++) {
 				}
 			}else{
 				unset($paymentDetails["paymentMethod"]);
+				var_dump($paymentDetails);
 				if( insertDB("bookInvoices", $paymentDetails) ){
 					return $paymentURL;die();
 				}else{
