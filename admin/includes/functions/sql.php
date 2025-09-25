@@ -61,7 +61,6 @@ function deleteDBNew($table, $params, $where){
 
 
 function selectDBNew($table, $placeHolders, $where, $order){
-    die("here");
     GLOBAL $dbconnect;
     $check = [';', '"'];
     $where = str_replace($check, "", $where);
