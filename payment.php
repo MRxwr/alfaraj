@@ -155,4 +155,28 @@ if ($err) {
 	}
 }
 
+$details = array(
+	"course" => $title,
+	"courseId" => $courseId,
+	"instructor" => $instructor,
+	"price" => $price,
+	"discount" => $discount,
+	"nationalty" => $nationality,
+	"name" => $name,
+	"email" => $email,
+	"phone" => $phone,
+	"qualification" => $qualification,
+	"paymentMethod" => $paymentMethod,
+	"orderId" => $orderId,
+	"startDate" => $startDate,
+	"endDate" => $endDate,
+	"instructorId" => $instructorId,
+	"status" => 2,
+	"type" => 1,
+);
+if( $payment = createAPI($details) ){
+	header("LOCATION: " . $payment);die();
+}else{
+	header("LOCATION: Faliure.php");die();
+}
 ?>
