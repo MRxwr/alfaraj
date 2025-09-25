@@ -375,8 +375,8 @@ for ($i = 0; $i < 3; $i++) {
 		// Build DB insert data
 		unset($paymentDetails['InvoiceItems']);
 		unset($paymentDetails['type']);
-		$paymentDetails["type"] = $type;
 		$paymentDetails["orderId"] = $resultMY["data"]["InvoiceId"];
+		$transactionDetails["type"] = $type;
 		$transactionDetails["orderId"] = $resultMY["data"]["InvoiceId"];
 		$transactionDetails["payload"] = json_encode($postMethodLines, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 		$transactionDetails["payloadResponse"] = json_encode($resultMY, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
