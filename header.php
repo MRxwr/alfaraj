@@ -1,6 +1,13 @@
 <?php
 require('admin/includes/config.php');
 require('language.php');
+if( isset($_GET["requested_order_id"]) && !empty($_GET["requested_order_id"]) ){
+	if( checkCreateAPI() ){
+		header("LOCATION : ?page=booking-complete&booking_id=".$_GET['requested_order_id']);die();
+	}else{
+		header("LOCATION: ?page=booking-faild&error=noCaptured");die();
+	}
+}
 if ( strpos($_SERVER['REQUEST_URI'],"index") OR strlen($_SERVER['REQUEST_URI']) == 1 ){
 	$activeHome = "active";
 	$activeAbout = "";

@@ -341,17 +341,17 @@ function createAPI($paymentDeatails){
 // Build request body for payment API
 $postMethodLines = array(
 	"endpoint"             => "PaymentRequestExcuteNew2024",
-	"apikey"               => "CKW-1758573468-6280",
+	"apikey"               => "CKW-1758835130-2366",
 	"PaymentMethodId"      => "1",
 	"CustomerName"         => $paymentDeatails['customer_name'],
 	"DisplayCurrencyIso"   => "KWD", 
 	"MobileCountryCode"    => "+965", 
 	"CustomerMobile"       => substr($paymentDeatails['mobile_number'], 0, 11),
 	"CustomerEmail"        => $paymentDeatails['customer_email'],
-	"invoiceValue"         => 30.5,
+	"invoiceValue"         => (float)$paymentDeatails['invoice_value'],
 	"SourceInfo"           => '',
-	"CallBackUrl"          => "https://myshootskw.net/index.php",
-	"ErrorUrl"             => "https://myshootskw.net/index.php",
+	"CallBackUrl"          => "https://alfaraj.co/index.php",
+	"ErrorUrl"             => "https://alfaraj.co/index.php",
 	"invoiceItems"         => $paymentDeatails['InvoiceItems'],
 );
 $headers = ['Content-Type: application/json'];
