@@ -20,7 +20,7 @@ if ( $courses = selectDBNew("courses",[$courseId],"`id` = ?", "") ){
 }else{
 	header("LOCATION: Faliure.php");die();
 }
-die("2");
+
 if( $instructors = selectDBNew("instructors",[$instructor,$instructor],"`enName` = ? OR `arName` = ?", "") ){
 	$instructorId = $instructors[0]["id"];
 }else{
@@ -53,7 +53,7 @@ $details = array(
 		)
 	),
 );
-die("we are here");
+
 if( $payment = createAPI($details) ){
 	header("LOCATION: " . $payment);die();
 }else{
