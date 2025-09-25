@@ -9,6 +9,16 @@ $name = $_POST["name"];
 $nationality = $_POST["nationality"];
 $qualification = $_POST["qualification"];
 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check database connection
+if (!$dbconnect) {
+    die("Database connection failed");
+}
+
+die("About to call selectDBNew with courseId: " . $courseId);
 if ( $courses = selectDBNew("courses",[$courseId],"`id` = ?", "") ){
 	die("after selectDBNew - courses found: " . count($courses));
 	$title = $courses[0]["enTitle"];
