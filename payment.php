@@ -55,7 +55,7 @@ $details = array(
 		)
 	),
 );
-
+die("we are here");
 if( $payment = createAPI($details) ){
 	header("LOCATION: " . $payment);die();
 }else{
