@@ -354,12 +354,12 @@ nloop = 0;
     $( document ).ready(function() {
         new WOW().init();
 		<?php 
-		if ( $orderSet == '1' ){
+		if ( isset($_GET["check"]) && $_GET["check"] == 'success' ){
 			?>
 			//$('#successInvoice').modal('show');
 			alert('Payment Successfull, We will contact you soon.');
 			<?php
-		}elseif( $orderSet == '0' ){
+		}elseif( isset($_GET["check"]) && $_GET["check"] == 'failed' ){
 			?>
 			//$('#failedInvoice').modal('show');
 			alert('Payment Failed, please try again.');
