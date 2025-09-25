@@ -1,6 +1,5 @@
 <?php
 session_start();
-header('Content-type: application/json');
 require("admin/includes/config.php");
 
 $courseId = $_POST["courseId"];
