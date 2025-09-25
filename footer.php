@@ -510,7 +510,7 @@ nloop = 0;
 					var day = d.getDate();
 					var output = d.getFullYear() + '-' + month + '-' + day;
 					if ( new Date(output) >=  new Date(dates[0]) ){
-						alert(output + " This course has ended. " + dates[0]);
+						alert("This course has ended.");
 						$(".btnNext").attr("style","display:none");
 					}else{
 						$(".btnNext").attr("style","display:block");
