@@ -12,5 +12,4 @@ $sql = "SET CHARACTER SET utf8";
 $dbconnect->query($sql);
 
 require_once("functions.php");
-die("we are heresss");
 ?>

@@ -10,7 +10,7 @@ $email = $_POST["email"];
 $name = $_POST["name"];
 $nationality = $_POST["nationality"];
 $qualification = $_POST["qualification"];
-
+die("1");
 if ( $courses = selectDBNew("courses",[$courseId],"`id` = ?", "") ){
 	$title = $courses[0]["enTitle"];
 	$instructor = $courses[0]["instructor"];
