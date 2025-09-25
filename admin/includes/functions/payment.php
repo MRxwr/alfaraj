@@ -416,7 +416,8 @@ function checkCreateAPI(){
 	GLOBAL $_GET;
 	if( isset($_GET["requested_order_id"]) && !empty($_GET["requested_order_id"]) ){
 		if( $_GET["result"] == "CAPTURED" ){
-			if( updateDB("orders", array("gatewayResponse" => json_encode($_GET), "status" => "1"), "`orderId` = {$_GET["requested_order_id"]} AND status = '0'")){
+			var_dump(updateDB("orders", array("gatewayResponse" => json_encode($_GET), "status" => "1"), "`orderId` = {$_GET["requested_order_id"]} AND status = '0'")); die("after updateDB");
+			if( updateDB("orders", array("gatewayResponse" => json_encode($_GET), "status" => "1"), "`orderId` = {$_GET["requested_order_id"]} AND status = '0'") ){
 				if( $order = selectDB("orders","`orderId` = '{$_GET["requested_order_id"]}'") ){
 					if( $order[0]["type"] == 1 ){
 						updateDB("invoices", array("status" => 1), "`orderId` = {$_GET["requested_order_id"]}");
