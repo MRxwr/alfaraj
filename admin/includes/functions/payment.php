@@ -415,14 +415,27 @@ return 0;
 function checkCreateAPI(){
 	GLOBAL $_GET;
 	if( isset($_GET["requested_order_id"]) && !empty($_GET["requested_order_id"]) ){
-		if( $_GET["result"] != "CAPTURED" ){
-			if( updateDB("tbl_booking", array("gatewayResponse" => json_encode($_GET), "status" => "No"), "transaction_id = {$_GET["requested_order_id"]} AND status = ''")){
+		if( $_GET["result"] == "CAPTURED" ){
+			if( updateDB("orders", array("gatewayResponse" => json_encode($_GET), "status" => "1"), "`orderId` = {$_GET["requested_order_id"]} AND status = '0'")){
+				if( $order = selectDB("orders","`orderId` = '{$_GET["requested_order_id"]}'") ){
+					if( $order[0]["type"] == 1 ){
+						updateDB("invoices", array("status" => 1), "`orderId` = {$_GET["requested_order_id"]}");
+					}else{
+						updateDB("bookInvoices", array("status" => 1), "`orderId` = {$_GET["requested_order_id"]}");
+					}
+				}else{
+					return 0;
+				}
+				return array( "orderId" => $_GET["requested_order_id"], "type" => $order[0]["type"] );
+			}else{
+				return 0;
 			}
-			return 0;
 		}else{
-			if( updateDB("tbl_booking", array("gatewayResponse" => json_encode($_GET), "status" => "Yes"), "transaction_id = {$_GET["requested_order_id"]} AND status = ''") ){
+			if( updateDB("orders", array("gatewayResponse" => json_encode($_GET), "status" => "2"), "`orderId` = {$_GET["requested_order_id"]} AND status = '0'") ){
+				return 0;
+			}else{
+				return 0;
 			}
-			return $_GET["requested_order_id"];
 		}
 	}else{
 		return 0;
