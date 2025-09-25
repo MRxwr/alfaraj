@@ -9,7 +9,6 @@ $name = $_POST["name"];
 $nationality = $_POST["nationality"];
 $qualification = $_POST["qualification"];
 
-die("before selectDBNew - courseId: " . $courseId);
 if ( $courses = selectDBNew("courses",[$courseId],"`id` = ?", "") ){
 	die("after selectDBNew - courses found: " . count($courses));
 	$title = $courses[0]["enTitle"];
