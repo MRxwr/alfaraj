@@ -261,7 +261,11 @@ function updateDB($table, $data, $where) {
     
 
     if ($stmt->execute()) {
-        return 1;
+        if ($stmt->affected_rows > 0) {
+            return 1;
+        } else {
+            return 0; // No rows were updated
+        }
     } else {
         $error = array("msg" => "update table error");
         return 0;
