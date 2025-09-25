@@ -1,5 +1,4 @@
 <?php
-session_start();
 require("admin/includes/config.php");
 
 $courseId = $_POST["courseId"];
