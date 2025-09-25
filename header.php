@@ -2,10 +2,14 @@
 require('admin/includes/config.php');
 require('language.php');
 if( isset($_GET["requested_order_id"]) && !empty($_GET["requested_order_id"]) ){
-	if( checkCreateAPI() ){
-		header("LOCATION : ?page=booking-complete&booking_id=".$_GET['requested_order_id']);die();
+	if( $checkingOrder = checkCreateAPI() ){
+		if( $checkingOrder["type"] == 1 ){
+			header("LOCATION: Success.php?orderId=".$checkingOrder["orderId"]);die();
+		}else{
+			header("LOCATION: index.php?check=success");die();
+		}
 	}else{
-		header("LOCATION: ?page=booking-faild&error=noCaptured");die();
+		header("LOCATION: Faliure.php");die();
 	}
 }
 if ( strpos($_SERVER['REQUEST_URI'],"index") OR strlen($_SERVER['REQUEST_URI']) == 1 ){
