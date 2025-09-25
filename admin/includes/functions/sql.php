@@ -61,6 +61,7 @@ function deleteDBNew($table, $params, $where){
 
 
 function selectDBNew($table, $placeHolders, $where, $order){
+    die("here");
     GLOBAL $dbconnect;
     $check = [';', '"'];
     $where = str_replace($check, "", $where);
@@ -71,7 +72,6 @@ function selectDBNew($table, $placeHolders, $where, $order){
     if(!empty($order)) {
         $sql .= " ORDER BY {$order}";
     }
-    echo $sql;die();
     if( $table == "employees" && strstr($where,"email") ){
         $array = array(
             "userId" => 0,
