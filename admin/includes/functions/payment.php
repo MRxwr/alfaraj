@@ -337,22 +337,24 @@ function sendOrderToAllowMENA($orderId){
 }
 
 // createapi payment
-function createAPI($paymentDeatails){
+function createAPI($paymentDetails){
+$price = (float)( ( 1 - ($paymentDetails['discount'] / 100) ) * $paymentDetails['price']);
+$type = $paymentDetails['type'];
 // Build request body for payment API
 $postMethodLines = array(
 	"endpoint"             => "PaymentRequestExcuteNew2024",
 	"apikey"               => "CKW-1758835130-2366",
 	"PaymentMethodId"      => "1",
-	"CustomerName"         => $paymentDeatails['customer_name'],
+	"CustomerName"         => $paymentDetails['name'],
 	"DisplayCurrencyIso"   => "KWD", 
 	"MobileCountryCode"    => "+965", 
-	"CustomerMobile"       => substr($paymentDeatails['mobile_number'], 0, 11),
-	"CustomerEmail"        => $paymentDeatails['customer_email'],
-	"invoiceValue"         => (float)$paymentDeatails['invoice_value'],
+	"CustomerMobile"       => substr($paymentDetails['phone'], 0, 11),
+	"CustomerEmail"        => $paymentDetails['email'],
+	"invoiceValue"         => (float)$paymentDetails['price'],
 	"SourceInfo"           => '',
 	"CallBackUrl"          => "https://alfaraj.co/index.php",
 	"ErrorUrl"             => "https://alfaraj.co/index.php",
-	"invoiceItems"         => $paymentDeatails['InvoiceItems'],
+	"invoiceItems"         => $paymentDetails['InvoiceItems'],
 );
 $headers = ['Content-Type: application/json'];
 for ($i = 0; $i < 3; $i++) {
@@ -371,15 +373,33 @@ for ($i = 0; $i < 3; $i++) {
 	$resultMY = json_decode($response, true);
 	if ( !empty($resultMY["data"]["InvoiceId"]) ) {
 		// Build DB insert data
-		unset($BookingDetails['InvoiceItems']);
-		unset($BookingDetails['customer_email']);
-		$BookingDetails["transaction_id"]  = $resultMY["data"]["InvoiceId"];
-		$BookingDetails["payload"]         = json_encode($postMethodLines, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-		$BookingDetails["payloadResponse"] = json_encode($resultMY, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-		$BookingDetails["gatewayLink"]     = $resultMY["data"]["PaymentURL"];
+		unset($paymentDetails['InvoiceItems']);
+		unset($paymentDetails['type']);
+		$paymentDetails["orderId"] = $resultMY["data"]["InvoiceId"];
+		$transactionDetails["orderId"] = $resultMY["data"]["InvoiceId"];
+		$transactionDetails["payload"] = json_encode($postMethodLines, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+		$transactionDetails["payloadResponse"] = json_encode($resultMY, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+		$transactionDetails["gatewayLink"] = $resultMY["data"]["PaymentURL"];
 		// Insert into DB
-		if ( insertDB("tbl_booking", $BookingDetails) ){
-			return $resultMY["data"]["PaymentURL"];die();
+		if ( insertDB("orders", $transactionDetails) ){
+			if( $paymentDetails["paymentMethod"] == 3 || $paymentDetails["paymentMethod"] == 4 ){
+				$paymentURL = "http://alfaraj.co/Success.php?orderId={$paymentDetails["orderId"]}";
+			}else{
+				$paymentURL = $resultMY["data"]["PaymentURL"];
+			}
+			if( $type == 1 ){
+				if( insertDB("invoices", $paymentDetails) ){
+					return $paymentURL;die();
+				}else{
+					return 0;die();
+				}
+			}else{
+				if( insertDB("bookInvoices", $paymentDetails) ){
+					return $paymentURL;die();
+				}else{
+					return 0;die();
+				}
+			}
 		}else{
 			return 0;die();
 		}
