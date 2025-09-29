@@ -10,6 +10,4 @@ if ( $dbconnect->connect_error ){
 }
 $sql = "SET CHARACTER SET utf8";
 $dbconnect->query($sql);
-
-require_once(__DIR__ . "/functions.php");
 ?>

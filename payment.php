@@ -1,5 +1,6 @@
 <?php
 require("admin/includes/config.php");
+require_once(__DIR__ . "/functions.php");
 
 $courseId = $_POST["courseId"];
 $paymentMethod = $_POST["paymentMethod"];

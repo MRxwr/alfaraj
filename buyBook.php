@@ -1,5 +1,6 @@
 <?php
 require("admin/includes/config.php");
+require_once(__DIR__ . "/functions.php");
 $book = $_POST["book"];
 $paymentMethod = '1';
 $phone = $_POST["phone1"];

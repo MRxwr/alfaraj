@@ -1,5 +1,6 @@
 <?php
 require('admin/includes/config.php');
+require_once(__DIR__ . "/functions.php");
 require('language.php');
 
 if ( isset($_POST["itemId"] ) ){
